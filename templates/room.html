@@ -1,12 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="message-box">
-    <h2>Chat Room: {{code}}</h2>
-    <div class="messages" id="messages"></div>
-    <div class="inputs">
-        <input type="text" rows="3" placeholder="Message" name="message" id="message"/>
-        <button type="button" name="send" id="send-btn" onclick="sendMessage()">
-            Send
+<div class="room-items">
+    <div class="message-box">
+        <h2>Chat Room: {{code}}</h2>
+        <div class="messages" id="messages"></div>
+        <div class="inputs">
+            <input type="text" rows="3" placeholder="Message" name="message" id="message"/>
+            <button type="button" name="send" id="send-btn" onclick="sendMessage()">
+                Send
+            </button>
+        </div>
+    </div>
+    <div class="leave-button">
+        <button type="button" onclick="leaveRoom()">
+            Leave The Room
         </button>
     </div>
 </div>
@@ -38,6 +45,10 @@
         if (message.value == "") return;
         socketio.emit("message", {data: message.value});
         message.value = "";
+    };
+
+    const leaveRoom = () => {
+        location.href = "/"
     };
 </script>
 {% for msg in messages %}
